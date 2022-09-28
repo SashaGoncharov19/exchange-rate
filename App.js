@@ -1,8 +1,15 @@
-import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, SafeAreaView, TextInput } from 'react-native';
+import {
+    SafeAreaView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableWithoutFeedback,
+    View,
+} from 'react-native';
 import { getExchangeRate } from './src';
 import { useEffect, useState } from 'react';
+import { Keyboard } from 'react-native';
 
 export default function App() {
     const [data, setData] = useState([]);
@@ -16,35 +23,29 @@ export default function App() {
 
     if (!data) return <Text>Loading...</Text>;
 
-    function handleChange(e) {
-        setNum(e.target.value);
-    }
-
-    function conventorD() {
-        const dollars = num / data[0]?.rateSell;
-        return dollars;
-    }
-
-    function conventorE() {
-        const euro = num / data[1]?.rateSell;
-        return euro;
+    function handleChange(text) {
+        setNum(text);
     }
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={styles.container} onPress={Keyboard.dismiss}>
             <View style={styles.wrapper}>
-                <View style={styles.conventr}>
+                <View style={styles.conventr} onPress={Keyboard.dismiss}>
                     <Text style={styles.conventrH}>Convert</Text>
                     <TextInput
-                        onChange={handleChange}
+                        onChangeText={handleChange}
                         style={styles.input}
                         placeholder="Enter number"
-                        keyboardType="numeric"
                         maxLength={10}
+                        onSubmit={Keyboard.dismiss}
                     />
                     <View style={styles.conventereD}>
-                        <Text style={styles.conventrT}>USD:{conventorD()}</Text>
-                        <Text style={styles.conventrT}>EUR:{conventorE()}</Text>
+                        <Text style={styles.conventrT}>
+                            USD:{num / data[0]?.rateSell}
+                        </Text>
+                        <Text style={styles.conventrT}>
+                            EUR:{num / data[1]?.rateSell}
+                        </Text>
                     </View>
                 </View>
                 <View style={styles.exchangeC}>

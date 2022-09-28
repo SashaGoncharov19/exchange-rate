@@ -3,9 +3,13 @@ import axios from 'axios';
 export async function getExchangeRate() {
     let array = [];
 
-    const { data } = await axios.get('https://api.monobank.ua/bank/currency');
+    try {
+        const { data } = await axios.get('http://192.168.1.111:6942/api/rate');
 
-    array.push(data[0], data[1]);
+        array.push(data[0], data[1]);
+    } catch (e) {
+        console.log(e);
+    }
 
     return array;
 }
