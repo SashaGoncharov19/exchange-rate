@@ -4,7 +4,7 @@ export async function getExchangeRate() {
     let array = [];
 
     try {
-        const { data } = await axios.get('http://192.168.1.111:6942/api/rate');
+        const { data } = await axios.get('http://192.168.0.218:6942/api/rate');
 
         array.push(data[0], data[1]);
     } catch (e) {
